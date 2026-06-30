@@ -170,23 +170,62 @@
 .phone-notch--shot { width: 74px; height: 14px; border-radius: 0 0 11px 11px; }
 .phone-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
-.carousel {
-  display: flex;
-  gap: 22px;
-  overflow-x: auto;
-  padding: 8px clamp(20px,4vw,40px) 26px;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
+.shot-tabs-wrap { display: flex; justify-content: center; margin-bottom: clamp(32px,5vw,48px); padding: 0 clamp(20px,4vw,40px); }
+.shot-tabs {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--surface-alt);
+  border: 1px solid #EFEAFB;
+  border-radius: var(--radius-pill);
+  padding: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-.carousel:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
-.shot { flex: none; scroll-snap-align: center; width: 200px; }
+.shot-tab {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  transition: background 0.18s, color 0.18s;
+}
+.shot-tab.active { background: var(--cta); color: #fff; box-shadow: var(--shadow-cta); }
+.shot-tab:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.shot-grid { display: none; }
+.shot-grid.active {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
+  justify-content: center;
+  gap: clamp(24px,3vw,34px);
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 clamp(20px,4vw,40px);
+}
+.shot { margin: 0; }
 .shot-cap {
   text-align: center;
   font-family: var(--font-head);
   font-weight: 600;
-  font-size: 14px;
-  color: var(--text);
-  margin-top: 16px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin-top: 14px;
+}
+@media (max-width: 640px) {
+  .shot-grid.active {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    padding-bottom: 12px;
+  }
+  .shot { flex: none; width: 200px; scroll-snap-align: center; }
 }
 
 .footer-link { color: rgba(255,255,255,0.88); cursor: default; }
