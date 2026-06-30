@@ -1,4 +1,4 @@
-const DOWNLOAD_URL = "./c-aegis.apk";
+const DOWNLOAD_URL = "https://github.com/syamxm/c-aegis-landing/releases/download/v3.0.0/c-aegis-v3.0.0.apk";
 
 const SHOTS_DIR = "./assets/screenshots_latest";
 
