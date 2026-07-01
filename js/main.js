@@ -1,4 +1,4 @@
-document.querySelectorAll("[data-download]").forEach(a => { a.href = DOWNLOAD_URL; });
+document.querySelectorAll("[data-download]").forEach(a => { a.href = DOWNLOAD_URL; a.setAttribute("download", ""); });
 
 const caption = (file, key) => file
   .replace(/\.[^.]+$/, "")
