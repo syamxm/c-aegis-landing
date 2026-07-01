@@ -88,6 +88,13 @@
   animation: caegisFloat 6s ease-in-out infinite;
 }
 
+@media (max-width: 640px) {
+  .hero-body { justify-content: center; }
+  .hero-copy { text-align: center; }
+  .hero-actions { align-items: center; }
+  .hero-lead { margin-left: auto; margin-right: auto; }
+}
+
 .features { max-width: 1180px; margin: 0 auto; padding: clamp(56px,9vw,100px) clamp(20px,4vw,40px); }
 .features .section-head { max-width: 640px; margin: 0 auto clamp(40px,6vw,60px); }
 .features .section-title { font-size: clamp(27px,3.6vw,40px); line-height: 1.12; margin: 0 0 14px; }
