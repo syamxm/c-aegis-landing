@@ -117,10 +117,7 @@ const renderDemoList = () => {
   ).join("");
 };
 
-let demoLoaded = false;
-
 const loadDemoClip = (index, { autoplay = false } = {}) => {
-  demoLoaded = true;
   demoIndex = index;
   const clip = demoGroup.clips[index];
   demoVideo.pause();
@@ -213,12 +210,7 @@ demoViewport.addEventListener("keydown", e => {
 
 renderDemoList();
 demoTime.textContent = `0:00 / ${demoGroup.clips[0].dur}`;
-const demoLazyObserver = new IntersectionObserver(([entry]) => {
-  if (!entry.isIntersecting) return;
-  demoLazyObserver.disconnect();
-  if (!demoLoaded) loadDemoClip(demoIndex);
-}, { rootMargin: "200px" });
-demoLazyObserver.observe(document.querySelector(".demos"));
+loadDemoClip(demoIndex);
 
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -228,6 +220,14 @@ const revealObserver = new IntersectionObserver(entries => {
     }
   });
 }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+
+document.querySelectorAll(".bento").forEach(bento => {
+  bento.classList.remove("reveal");
+  [...bento.children].forEach((card, i) => {
+    card.classList.add("reveal");
+    card.style.setProperty("--d", `${i * 0.06}s`);
+  });
+});
 
 document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
 
@@ -267,3 +267,60 @@ if (canMagnet) {
     btn.addEventListener("pointerleave", () => { btn.style.transform = ""; });
   });
 }
+
+const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const consentSwitch = document.getElementById("consentSwitch");
+const consentDemo = document.getElementById("consentDemo");
+if (consentSwitch && consentDemo) {
+  const setGranted = granted => {
+    consentDemo.classList.toggle("is-granted", granted);
+    consentSwitch.setAttribute("aria-checked", granted);
+    consentSwitch.querySelector(".consent-switch-label").textContent = granted ? "Consent granted" : "Grant consent";
+  };
+  consentSwitch.addEventListener("click", () => setGranted(!consentDemo.classList.contains("is-granted")));
+  if (prefersReduced) setGranted(true);
+  else setTimeout(() => { if (!consentDemo.classList.contains("is-granted")) setGranted(true); }, 2600);
+}
+
+const hero = document.querySelector(".hero");
+if (hero && window.matchMedia("(pointer: fine)").matches) {
+  hero.addEventListener("pointermove", e => {
+    const r = hero.getBoundingClientRect();
+    hero.style.setProperty("--sx", `${e.clientX - r.left}px`);
+    hero.style.setProperty("--sy", `${e.clientY - r.top}px`);
+  });
+}
+
+const countEls = document.querySelectorAll("[data-count]");
+if (countEls.length) {
+  const runCount = el => {
+    const raw = el.textContent.trim();
+    const m = raw.match(/^(\d+)(.*)$/);
+    if (!m || prefersReduced) return;
+    const target = +m[1];
+    const suffix = m[2];
+    const dur = 1100;
+    let start = null;
+    const step = t => {
+      if (start === null) start = t;
+      const p = Math.min((t - start) / dur, 1);
+      el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const countObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      countObserver.unobserve(entry.target);
+      runCount(entry.target);
+    });
+  }, { threshold: 1 });
+  countEls.forEach(el => countObserver.observe(el));
+}
+
+const introEl = document.getElementById("intro");
+if (introEl) introEl.addEventListener("animationend", e => {
+  if (e.animationName === "introOut") introEl.remove();
+});

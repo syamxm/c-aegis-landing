@@ -69,9 +69,22 @@ button:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; bo
   filter: blur(90px);
   opacity: 0.5;
 }
-.orb--violet { width: 44vw; height: 44vw; top: -14vw; right: -10vw; background: #E3D9FB; }
-.orb--pink { width: 34vw; height: 34vw; top: 42vh; left: -14vw; background: #FFDFEB; }
-.orb--mint { width: 30vw; height: 30vw; bottom: -12vw; right: 8vw; background: #DDF2E2; }
+.orb--violet { width: 44vw; height: 44vw; top: -14vw; right: -10vw; background: #E3D9FB; animation: orbDriftA 28s var(--ease) infinite; }
+.orb--pink { width: 34vw; height: 34vw; top: 42vh; left: -14vw; background: #FFDFEB; animation: orbDriftB 34s var(--ease) infinite; }
+.orb--mint { width: 30vw; height: 30vw; bottom: -12vw; right: 8vw; background: #DDF2E2; animation: orbDriftC 31s var(--ease) infinite; }
+
+@keyframes orbDriftA {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-4vw, 5vw, 0) scale(1.12); }
+}
+@keyframes orbDriftB {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(6vw, -4vw, 0) scale(0.9); }
+}
+@keyframes orbDriftC {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-5vw, -6vw, 0) scale(1.15); }
+}
 
 .grain {
   position: fixed;
@@ -81,6 +94,34 @@ button:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; bo
   opacity: 0.035;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  animation: introOut 0.9s var(--ease) 1.3s forwards;
+}
+.intro-mark {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 1.4rem;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, #1B5FD9, #6E3AD6 55%, #A23BC9);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), var(--shadow-lift);
+  animation: introPulse 1.3s var(--ease) infinite;
+}
+@keyframes introPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+@keyframes introOut {
+  to { opacity: 0; visibility: hidden; transform: translateY(-1.5%); }
 }
 
 .reveal {
@@ -101,5 +142,6 @@ button:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; bo
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+  .intro { display: none; }
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
 }
