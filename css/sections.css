@@ -200,19 +200,18 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
 .step-card p { font-size: 0.88rem; color: rgba(255, 255, 255, 0.6); }
 
 /* ---------- Trust ---------- */
-.trust { padding: 5rem 0; }
+.trust { padding: 2rem 0 3rem; }
 .trust-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.1rem;
-}
-.trust-item {
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.55);
   border: 1px solid var(--hairline);
-  border-radius: 1.6rem;
-  padding: 2rem 1.8rem;
+  border-radius: 1.8rem;
   box-shadow: var(--shadow-float);
+  overflow: hidden;
 }
+.trust-item { padding: 2.4rem 2.2rem; }
+.trust-item + .trust-item { border-left: 1px solid var(--hairline); }
 .trust-item h3 { font-size: 1.05rem; font-weight: 600; margin: 1.2rem 0 0.4rem; }
 .trust-item p { font-size: 0.88rem; color: var(--text-muted); }
 .trust-icon {
@@ -261,11 +260,14 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
   gap: 1.6rem;
   overflow-x: auto;
   padding: 1rem 0.5rem 2rem;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
   scrollbar-width: none;
 }
 .shot-grid::-webkit-scrollbar { display: none; }
 .shot-grid.active { display: flex; }
+.shot-grid { cursor: grab; }
+.shot-grid.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+.shot-grid.is-dragging .shot { pointer-events: none; }
 
 .shot { margin: 0; flex: 0 0 auto; scroll-snap-align: center; }
 .shot .bezel--phone {
@@ -350,6 +352,7 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
   .how-steps { grid-template-columns: 1fr; }
   .step-card { transform: none; }
   .trust-grid { grid-template-columns: 1fr; }
+  .trust-item + .trust-item { border-left: 0; border-top: 1px solid var(--hairline); }
 }
 
 @media (max-width: 768px) {

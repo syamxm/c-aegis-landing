@@ -41,6 +41,37 @@ document.getElementById("shotTabs").addEventListener("click", e => {
   document.querySelectorAll(".shot-grid").forEach(p => p.classList.toggle("active", p.dataset.group === key));
 });
 
+document.querySelectorAll(".shot-grid").forEach(rail => {
+  rail.addEventListener("wheel", e => {
+    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+    e.preventDefault();
+    rail.scrollLeft += e.deltaY;
+  }, { passive: false });
+
+  let startX = 0;
+  let startScroll = 0;
+  let dragging = false;
+
+  rail.addEventListener("pointerdown", e => {
+    if (e.pointerType !== "mouse") return;
+    dragging = true;
+    startX = e.clientX;
+    startScroll = rail.scrollLeft;
+    rail.setPointerCapture(e.pointerId);
+  });
+  rail.addEventListener("pointermove", e => {
+    if (!dragging) return;
+    if (Math.abs(e.clientX - startX) > 4) rail.classList.add("is-dragging");
+    rail.scrollLeft = startScroll - (e.clientX - startX);
+  });
+  const endDrag = () => {
+    dragging = false;
+    rail.classList.remove("is-dragging");
+  };
+  rail.addEventListener("pointerup", endDrag);
+  rail.addEventListener("pointercancel", endDrag);
+});
+
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
