@@ -73,6 +73,16 @@ button:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; bo
 .orb--pink { width: 34vw; height: 34vw; top: 42vh; left: -14vw; background: #FFDFEB; }
 .orb--mint { width: 30vw; height: 30vw; bottom: -12vw; right: 8vw; background: #DDF2E2; }
 
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(3.5rem);

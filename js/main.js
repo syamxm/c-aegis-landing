@@ -252,3 +252,18 @@ const setMenu = open => {
 
 burger.addEventListener("click", () => setMenu(!overlay.classList.contains("is-open")));
 overlay.addEventListener("click", () => setMenu(false));
+
+const canMagnet = window.matchMedia("(pointer: fine)").matches
+  && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (canMagnet) {
+  document.querySelectorAll(".btn-pill").forEach(btn => {
+    btn.addEventListener("pointermove", e => {
+      const r = btn.getBoundingClientRect();
+      const mx = (e.clientX - (r.left + r.width / 2)) * 0.3;
+      const my = (e.clientY - (r.top + r.height / 2)) * 0.3;
+      btn.style.transform = `translate(${mx}px, ${my}px)`;
+    });
+    btn.addEventListener("pointerleave", () => { btn.style.transform = ""; });
+  });
+}

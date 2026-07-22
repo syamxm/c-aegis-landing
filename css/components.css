@@ -128,7 +128,6 @@
   background: var(--ink);
   color: #fff;
 }
-.btn-pill--nav:hover { transform: translateY(-1px); }
 
 .btn-pill--cta {
   background: var(--cta);
@@ -137,7 +136,6 @@
 }
 .btn-pill--cta:hover {
   background: var(--cta-deep);
-  transform: translateY(-2px);
   box-shadow: 0 24px 56px -16px rgba(255, 45, 111, 0.65);
 }
 .btn-pill--lg {
