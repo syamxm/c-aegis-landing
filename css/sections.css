@@ -13,12 +13,21 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
 
 /* ---------- Hero ---------- */
 .hero {
+  position: relative;
   min-height: 100dvh;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   align-items: center;
   gap: 3rem;
   padding: 8.5rem 0 6rem;
+}
+.hero-copy, .hero-stage { position: relative; z-index: 1; }
+.hero-spot {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(22rem 22rem at var(--sx, 50%) var(--sy, 32%), rgba(110, 58, 214, 0.16), transparent 60%);
 }
 .hero-title {
   font-size: clamp(3rem, 8vw, 5.6rem);
@@ -87,10 +96,14 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
   box-shadow: var(--shadow-float);
   font-size: 0.8rem;
   font-weight: 700;
-  animation: chipFloat 7s var(--ease) infinite;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease);
 }
 .hero-chip--consent { top: 14%; left: 2%; }
-.hero-chip--zone { bottom: 16%; right: 0; animation-delay: -3.5s; }
+.hero-chip--zone { bottom: 16%; right: 0; }
+.is-granted .hero-chip { opacity: 1; }
+.is-granted .hero-chip--consent { animation: chipFloat 7s var(--ease) infinite; transition-delay: 0.15s; }
+.is-granted .hero-chip--zone { animation: chipFloat 7s var(--ease) -3.5s infinite; transition-delay: 0.3s; }
 .chip-icon {
   width: 1.7rem;
   height: 1.7rem;
@@ -104,6 +117,118 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
 @keyframes chipFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-12px); }
+}
+
+/* ---------- Consent-gate interactive demo ---------- */
+.consent-demo { position: relative; display: grid; place-items: center; }
+
+.consent-demo .phone-img {
+  transition: filter 0.9s var(--ease), transform 0.9s var(--ease);
+  filter: blur(7px) brightness(0.82) saturate(0.9);
+  transform: scale(1.05);
+}
+.is-granted .phone-img { filter: none; transform: scale(1); }
+
+.radar-sweep {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: conic-gradient(from 0deg, transparent 0deg 300deg, rgba(110, 58, 214, 0.30) 355deg, transparent 360deg);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease);
+  animation: radarSpin 4s linear infinite;
+  animation-play-state: paused;
+}
+.is-granted .radar-sweep { opacity: 1; animation-play-state: running; }
+@keyframes radarSpin { to { transform: rotate(360deg); } }
+
+.consent-lock {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: rgba(20, 18, 43, 0.5);
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: opacity 0.7s var(--ease), visibility 0.7s var(--ease);
+}
+.consent-lock-ic {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.is-granted .consent-lock { opacity: 0; visibility: hidden; }
+
+.consent-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 1.7rem;
+  padding: 0.45rem 1rem 0.45rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--shadow-float);
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+  animation: switchInvite 2.6s var(--ease) infinite;
+}
+.consent-switch[aria-checked="true"] { animation: none; }
+.consent-switch-track {
+  position: relative;
+  width: 2.9rem;
+  height: 1.55rem;
+  border-radius: 999px;
+  background: rgba(19, 19, 32, 0.14);
+  box-shadow: inset 0 1px 2px rgba(19, 19, 32, 0.12);
+  transition: background 0.5s var(--ease);
+}
+.consent-switch-thumb {
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(19, 19, 32, 0.28);
+  transition: transform 0.5s var(--ease);
+}
+.consent-switch[aria-checked="true"] .consent-switch-track { background: var(--green); }
+.consent-switch[aria-checked="true"] .consent-switch-thumb { transform: translateX(1.32rem); }
+@keyframes switchInvite {
+  0%, 100% { box-shadow: var(--shadow-float); }
+  50% { box-shadow: var(--shadow-float), 0 0 0 6px rgba(110, 58, 214, 0.10); }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+    .consent-demo {
+      animation: heroParallax linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 70vh;
+    }
+    @keyframes heroParallax { to { transform: translateY(-2.5rem); } }
+  }
 }
 
 /* ---------- Features / bento ---------- */

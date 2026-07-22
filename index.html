@@ -19,11 +19,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/c-aegis_demo/posters/parent_add_child.jpg">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/sections.css">
 </head>
 <body>
+
+<div class="intro" id="intro" aria-hidden="true">
+  <span class="intro-mark">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 11 2 2 4-4"/></svg>
+  </span>
+</div>
 
 <div class="bg-orbs" aria-hidden="true">
   <div class="orb orb--violet"></div>
@@ -69,6 +76,7 @@
 <main id="top">
 
 <section class="hero">
+  <div class="hero-spot" aria-hidden="true"></div>
   <div class="hero-copy">
     <div class="eyebrow reveal">
       <span class="eyebrow-dot"></span>
@@ -92,32 +100,45 @@
       </span>
     </div>
     <div class="hero-ticks reveal" style="--d:.32s">
-      <div class="tick"><strong>100%</strong><span>consent-gated</span></div>
+      <div class="tick"><strong data-count>100%</strong><span>consent-gated</span></div>
       <div class="tick-rule"></div>
-      <div class="tick"><strong>0</strong><span>hidden tracking</span></div>
+      <div class="tick"><strong data-count>0</strong><span>hidden tracking</span></div>
       <div class="tick-rule"></div>
-      <div class="tick"><strong>2-way</strong><span>transparency</span></div>
+      <div class="tick"><strong data-count>2-way</strong><span>transparency</span></div>
     </div>
   </div>
 
   <div class="hero-stage reveal" style="--d:.2s">
-    <div class="bezel bezel--phone bezel--tilt">
-      <div class="bezel-core phone-screen">
-        <div class="phone-notch"></div>
-        <img class="phone-img" src="assets/screenshots_latest/parent/parent_radarActivity.jpeg" alt="Live radar map in C-Aegis">
+    <div class="consent-demo" id="consentDemo">
+      <div class="bezel bezel--phone bezel--tilt">
+        <div class="bezel-core phone-screen">
+          <div class="phone-notch"></div>
+          <img class="phone-img" src="assets/screenshots_latest/parent/parent_radarActivity.jpeg" alt="Live radar map in C-Aegis">
+          <div class="radar-sweep" aria-hidden="true"></div>
+          <div class="consent-lock" aria-hidden="true">
+            <span class="consent-lock-ic">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            </span>
+            <span>Awaiting consent</span>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="hero-chip hero-chip--consent">
-      <span class="chip-icon chip-icon--green">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
-      </span>
-      Consent granted
-    </div>
-    <div class="hero-chip hero-chip--zone">
-      <span class="chip-icon chip-icon--violet">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-      </span>
-      Arrived at school
+      <div class="hero-chip hero-chip--consent">
+        <span class="chip-icon chip-icon--green">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+        </span>
+        Consent granted
+      </div>
+      <div class="hero-chip hero-chip--zone">
+        <span class="chip-icon chip-icon--violet">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </span>
+        Arrived at school
+      </div>
+      <button class="consent-switch" id="consentSwitch" role="switch" aria-checked="false" aria-label="Grant consent">
+        <span class="consent-switch-track"><span class="consent-switch-thumb"></span></span>
+        <span class="consent-switch-label">Grant consent</span>
+      </button>
     </div>
   </div>
 </section>
@@ -318,7 +339,7 @@
     <div class="demo-stage">
       <div class="bezel bezel--phone bezel--player">
         <div class="bezel-core phone-screen demo-viewport" id="demoViewport" tabindex="0" role="group" aria-label="Demo video player. Space to play or pause, arrow keys to scrub.">
-          <video id="demoVideo" preload="none" muted loop playsinline></video>
+          <video id="demoVideo" preload="metadata" muted loop playsinline></video>
           <button class="demo-bigplay" id="demoBigPlay" aria-label="Play demo">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg>
           </button>
