@@ -138,17 +138,33 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
   gap: 1.5rem;
   align-items: stretch;
   overflow: hidden;
+  padding-bottom: 0;
 }
 .bento-card-body { flex: 1; align-self: center; }
 .bento-card--wide h3 { font-size: 1.5rem; }
 .bento-card--wide p { font-size: 0.98rem; max-width: 26rem; }
 .bento-shot {
-  flex: 0 0 42%;
-  display: grid;
-  align-items: end;
-  margin: -0.4rem -0.4rem -5rem 0;
+  flex: 0 0 40%;
+  align-self: flex-end;
+  height: 26rem;
+  margin: 2rem -0.45rem 0 0;
+  min-width: 0;
 }
-.bento-shot img { width: 100%; }
+.bento-shot .bezel--mini {
+  height: 100%;
+  border-radius: 1.4rem 1.4rem 0 0;
+  padding-bottom: 0;
+}
+.bento-shot .bezel-core {
+  height: 100%;
+  border-radius: calc(1.4rem - 0.35rem) calc(1.4rem - 0.35rem) 0 0;
+}
+.bento-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
 
 .bento--child .bento-card { grid-column: span 4; }
 .bento-card--tall { grid-column: span 4; grid-row: span 1; }
@@ -348,7 +364,7 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
   .bento-card--wide,
   .bento--child .bento-card { grid-column: span 6; }
   .bento-card--wide { grid-row: span 1; flex-direction: column; }
-  .bento-shot { margin: 0 0 -4rem; flex-basis: auto; }
+  .bento-shot { margin: 1.5rem auto 0; height: 20rem; width: min(18rem, 100%); flex-basis: auto; align-self: center; }
   .how-steps { grid-template-columns: 1fr; }
   .step-card { transform: none; }
   .trust-grid { grid-template-columns: 1fr; }
