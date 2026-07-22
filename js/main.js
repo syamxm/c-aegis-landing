@@ -315,3 +315,19 @@ const introEl = document.getElementById("intro");
 if (introEl) introEl.addEventListener("animationend", e => {
   if (e.animationName === "introOut") introEl.remove();
 });
+
+if (!prefersReduced) {
+  document.querySelectorAll(".btn-pill").forEach(btn => {
+    btn.addEventListener("pointerdown", e => {
+      const r = btn.getBoundingClientRect();
+      const size = Math.max(r.width, r.height);
+      const ripple = document.createElement("span");
+      ripple.className = "ripple";
+      ripple.style.width = ripple.style.height = `${size}px`;
+      ripple.style.left = `${e.clientX - r.left - size / 2}px`;
+      ripple.style.top = `${e.clientY - r.top - size / 2}px`;
+      btn.appendChild(ripple);
+      ripple.addEventListener("animationend", () => ripple.remove());
+    });
+  });
+}
