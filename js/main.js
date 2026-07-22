@@ -283,15 +283,6 @@ if (consentSwitch && consentDemo) {
   else setTimeout(() => { if (!consentDemo.classList.contains("is-granted")) setGranted(true); }, 2600);
 }
 
-const hero = document.querySelector(".hero");
-if (hero && window.matchMedia("(pointer: fine)").matches) {
-  hero.addEventListener("pointermove", e => {
-    const r = hero.getBoundingClientRect();
-    hero.style.setProperty("--sx", `${e.clientX - r.left}px`);
-    hero.style.setProperty("--sy", `${e.clientY - r.top}px`);
-  });
-}
-
 const countEls = document.querySelectorAll("[data-count]");
 if (countEls.length) {
   const runCount = el => {
