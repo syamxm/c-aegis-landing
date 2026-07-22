@@ -36,6 +36,7 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
 }
 .hero-lead {
   font-size: 1.1rem;
+  line-height: 1.7;
   color: var(--text-muted);
   max-width: 30rem;
   margin-bottom: 2.4rem;
@@ -256,8 +257,8 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
   transform: translateY(-6px);
   box-shadow: var(--shadow-lift);
 }
-.bento-card h3 { font-size: 1.1rem; font-weight: 600; margin: 1.1rem 0 0.45rem; }
-.bento-card p { font-size: 0.9rem; color: var(--text-muted); }
+.bento-card h3 { font-size: 1.15rem; font-weight: 600; margin: 1.1rem 0 0.45rem; }
+.bento-card p { font-size: 0.92rem; line-height: 1.6; color: var(--text-muted); }
 
 .bento-card--wide {
   grid-column: span 8;
@@ -325,7 +326,7 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
   color: rgba(255, 255, 255, 0.4);
 }
 .step-card h3 { font-size: 1.15rem; font-weight: 600; margin: 1.2rem 0 0.5rem; }
-.step-card p { font-size: 0.88rem; color: rgba(255, 255, 255, 0.6); }
+.step-card p { font-size: 0.92rem; line-height: 1.6; color: rgba(255, 255, 255, 0.6); }
 
 /* ---------- Trust ---------- */
 .trust { padding: 3.5rem 0 4rem; }
@@ -345,7 +346,7 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
 .trust-item:hover { background: rgba(255, 255, 255, 0.5); }
 .trust-item + .trust-item { border-left: 1px solid var(--hairline); }
 .trust-item h3 { font-size: 1.05rem; font-weight: 600; margin: 1.2rem 0 0.4rem; }
-.trust-item p { font-size: 0.88rem; color: var(--text-muted); }
+.trust-item p { font-size: 0.92rem; line-height: 1.6; color: var(--text-muted); }
 .trust-icon {
   width: 2.6rem;
   height: 2.6rem;
@@ -357,6 +358,34 @@ main { max-width: 76rem; margin: 0 auto; padding: 0 1.5rem; }
 .trust-icon--pink { background: var(--pink-soft); color: var(--cta); }
 .trust-icon--purple { background: var(--violet-soft); color: var(--violet); }
 .trust-icon--green { background: var(--green-soft); color: var(--green); }
+
+/* ---------- Pledge colour band ---------- */
+.pledge { padding: 3rem 0 4.5rem; }
+.pledge-band {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2.5rem;
+  padding: 5rem 3rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--violet), var(--cta));
+  box-shadow: var(--shadow-lift), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+.pledge-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(32rem 20rem at 12% -15%, rgba(255, 255, 255, 0.22), transparent 62%);
+  pointer-events: none;
+}
+.pledge-band > * { position: relative; }
+.pledge-band .eyebrow { margin-bottom: 1.5rem; }
+.pledge-title {
+  color: #fff;
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
 
 /* ---------- Screenshots ---------- */
 .screenshots { padding: 6rem 0; }
