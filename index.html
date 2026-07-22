@@ -31,6 +31,7 @@
     <a href="#features">Features</a>
     <a href="#how">How it works</a>
     <a href="#screens">Screens</a>
+    <a href="#demos">Demos</a>
   </nav>
   <a class="btn-pill btn-pill--nav" data-download href="#">
     <span>Get the app</span>
@@ -48,7 +49,8 @@
     <a href="#features" style="--i:0">Features</a>
     <a href="#how" style="--i:1">How it works</a>
     <a href="#screens" style="--i:2">Screens</a>
-    <a data-download href="#" style="--i:3">Download APK</a>
+    <a href="#demos" style="--i:3">Demos</a>
+    <a data-download href="#" style="--i:4">Download APK</a>
   </nav>
 </div>
 
@@ -288,6 +290,45 @@
   </div>
   <div id="shotPanels" class="shot-panels reveal"></div>
   <p class="shot-hint">Drag or scroll sideways to explore →</p>
+</section>
+
+<section class="demos" id="demos">
+  <div class="section-head reveal">
+    <div class="eyebrow"><span class="eyebrow-dot"></span>See it in action</div>
+    <h2 class="section-title">A guided walkthrough,<br><span class="dim">clip by clip.</span></h2>
+  </div>
+
+  <div class="demo-tabs-wrap reveal">
+    <div id="demoTabs" class="shot-tabs" role="tablist" aria-label="Demo groups"></div>
+  </div>
+
+  <div class="demo-layout reveal">
+    <div class="demo-stage">
+      <div class="bezel bezel--phone bezel--player">
+        <div class="bezel-core phone-screen demo-viewport" id="demoViewport" tabindex="0" role="group" aria-label="Demo video player. Space to play or pause, arrow keys to scrub.">
+          <video id="demoVideo" preload="none" muted loop playsinline></video>
+          <button class="demo-bigplay" id="demoBigPlay" aria-label="Play demo">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="demo-controls" aria-label="Playback controls">
+        <button class="demo-ctl" id="demoPlay" aria-label="Play">
+          <svg class="ic-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"/></svg>
+          <svg class="ic-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3.4v14H7zM13.6 5H17v14h-3.4z"/></svg>
+        </button>
+        <button class="demo-ctl" id="demoRestart" aria-label="Restart from beginning">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+        </button>
+        <input class="demo-scrub" id="demoScrub" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek position">
+        <span class="demo-time" id="demoTime">0:00 / 0:00</span>
+        <button class="demo-ctl demo-ctl--speed" id="demoSpeed" aria-label="Playback speed">1×</button>
+      </div>
+    </div>
+
+    <div class="demo-list" id="demoList" role="tablist" aria-label="Demo clips" aria-orientation="vertical"></div>
+  </div>
 </section>
 
 <section class="cta-footer">
