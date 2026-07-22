@@ -30,7 +30,7 @@ const DEMOS_DIR = "./assets/c-aegis_demo";
 const DEMO_GROUPS = [
   {
     key: "parent", label: "Parent demos", clips: [
-      { file: "add_child.mp4", title: "Link a child", desc: "Sending a secure link request to a child account.", dur: "0:23" },
+      { file: "add_child.mp4", title: "Link a child", desc: "Sending a secure link request to a child account.", dur: "0:22" },
       { file: "geofence.mp4", title: "Geofence alerts", desc: "Drawing a safe zone on the map and receiving the breach alert.", dur: "0:20" },
       { file: "offline_trimmed.mp4", title: "Offline caching", desc: "Locations cache while offline and sync on reconnect.", dur: "0:20" },
       { file: "logout_too_many_attempts_tamper.mp4", title: "PIN tamper alert", desc: "Repeated failed PIN attempts trigger a tamper alert.", dur: "0:47" },
