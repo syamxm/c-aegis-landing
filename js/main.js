@@ -11,9 +11,9 @@ const shot = (file, key) => {
   const cap = caption(file, key);
   return `
   <figure class="shot">
-    <div class="phone-frame phone-frame--shot">
-      <div class="phone-screen phone-screen--shot">
-        <div class="phone-notch phone-notch--shot"></div>
+    <div class="bezel bezel--phone">
+      <div class="bezel-core phone-screen">
+        <div class="phone-notch"></div>
         <img class="phone-img" src="${SHOTS_DIR}/${key}/${file}" alt="${cap}" loading="lazy">
       </div>
     </div>
@@ -40,3 +40,36 @@ document.getElementById("shotTabs").addEventListener("click", e => {
   });
   document.querySelectorAll(".shot-grid").forEach(p => p.classList.toggle("active", p.dataset.group === key));
 });
+
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("is-in");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+
+document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+
+const navIsland = document.getElementById("navIsland");
+const navSentinel = document.createElement("div");
+navSentinel.style.cssText = "position:absolute;top:0;height:80px;width:1px;";
+document.body.prepend(navSentinel);
+new IntersectionObserver(([entry]) => {
+  navIsland.classList.toggle("is-scrolled", !entry.isIntersecting);
+}).observe(navSentinel);
+
+const burger = document.getElementById("navBurger");
+const overlay = document.getElementById("navOverlay");
+
+const setMenu = open => {
+  burger.classList.toggle("is-open", open);
+  overlay.classList.toggle("is-open", open);
+  burger.setAttribute("aria-expanded", open);
+  overlay.setAttribute("aria-hidden", !open);
+  document.body.style.overflow = open ? "hidden" : "";
+};
+
+burger.addEventListener("click", () => setMenu(!overlay.classList.contains("is-open")));
+overlay.addEventListener("click", () => setMenu(false));
